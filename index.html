@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Llega al cero II</title>
-<meta name="description" content="Un acertijo de dígitos: deja el número en ceros con el mínimo de movimientos.">
+<title>Llega al nueve</title>
+<meta name="description" content="Un acertijo de dígitos: convierte todos los dígitos en 9 con el mínimo de movimientos.">
 <style>
 :root{--bg1:#fff4d6;--bg2:#d9f0ff;--ink:#2b2350;--card:#ffffffd9;--pink:#ff4f9a;--blue:#2f7bff;--green:#19c37d;--orange:#ff9a1f;--violet:#b03fd0}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -32,10 +32,10 @@ h1{margin:4px 0 2px;text-align:center;font-size:clamp(28px,7vw,44px);letter-spac
 .tile.pop{animation:pop .45s}
 @keyframes pulse{to{transform:translateY(-5px) scale(1.06)}}
 @keyframes pop{30%{transform:scale(1.25) rotate(-6deg)}70%{transform:scale(.95) rotate(3deg)}}
-.d0{background:#b9c4d0;text-shadow:none;color:#5d6a78}
+.d9{background:#b9c4d0;text-shadow:none;color:#5d6a78}
 .d1{background:#ff4f6d}.d2{background:#ff8a1f}.d3{background:#ffd84a;text-shadow:0 2px 0 #0004}
 .d4{background:#19c37d}.d5{background:#a83ad0}.d6{background:#ff6fa5}.d7{background:#2f7bff}
-.d8{background:#b5651d}.d9{background:#3a3a52}
+.d8{background:#b5651d}.d0{background:#3a3a52}
 .diffs{position:absolute;left:14px;right:14px;top:6px;height:24px;pointer-events:none}
 .diffs span{position:absolute;transform:translateX(-50%);font-size:14px;font-weight:bold;border-radius:8px;padding:1px 5px;background:#fff;box-shadow:0 1px 3px #0003}
 .diffs .z{opacity:.35;font-weight:normal}
@@ -61,8 +61,8 @@ summary{cursor:pointer;font-weight:bold}
 </head>
 <body>
 <main>
-<h1>Llega al cero II</h1>
-<p class="sub">Deja todos los dígitos en <b>0</b> con el menor número de movimientos.</p>
+<h1>Llega al nueve</h1>
+<p class="sub">Deja todos los dígitos en <b>9</b> con el menor número de movimientos.</p>
 
 <div class="card">
  <div class="stats"><div class="pill">Movimientos: <b id="mv">0</b></div></div>
@@ -87,14 +87,14 @@ summary{cursor:pointer;font-weight:bold}
 <div class="card">
 <details open><summary>Cómo se juega</summary>
 <p>Toca un dígito y luego otro: se seleccionan ellos y todos los que hay entre medias (un grupo contiguo). Después pulsa una cantidad para <b>restarla</b> o <b>sumarla</b> a todo el grupo. Ningún dígito puede salirse de 0–9, así que los botones que lo harían se apagan.</p>
-<p>Un movimiento es una selección más una cantidad. ¿Cuál es el mínimo de movimientos para llegar a 0000000000?</p>
+<p>Un movimiento es una selección más una cantidad. ¿Cuál es el mínimo de movimientos para llegar a 9999999999?</p>
 </details>
 </div>
 </main>
 <canvas id="fx"></canvas>
 <script>
-const START=[1,3,3,1,8,8,7,7,0,8];
-const SOL=[[0,5,-1],[1,2,-2],[4,7,-7],[9,9,-8]];
+const START=[8,6,6,8,1,1,2,2,9,1];
+const SOL=[[0,5,1],[1,2,2],[4,7,7],[9,9,8]];
 const N=10;
 let cur,applied,hist,sel,hintLvl,showDiffs,busy,won;
 const $=id=>document.getElementById(id);
@@ -122,7 +122,7 @@ function render(hintMove,popRange){
   row.appendChild(t)});
  const dg=$('diffs');dg.innerHTML='';
  if(showDiffs){
-  const d=[cur[0]];for(let i=1;i<N;i++)d.push(cur[i]-cur[i-1]);d.push(-cur[N-1]);
+  const d=[cur[0]-9];for(let i=1;i<N;i++)d.push(cur[i]-cur[i-1]);d.push(9-cur[N-1]);
   d.forEach((x,i)=>{const s=document.createElement('span');
    s.textContent=x>0?'+'+x:x;s.className=x>0?'p':x<0?'n':'z';
    s.style.left='calc('+i+' * (100% + 6px) / 10 - 3px)';
@@ -162,7 +162,7 @@ function apply(k,rg,silent){
  for(let i=l;i<=r;i++)cur[i]+=k;
  applied.push([l,r,k]);
  sel=null;hintLvl=Math.min(hintLvl,3);
- if(cur.every(x=>x==0)){won=true;
+ if(cur.every(x=>x==9)){won=true;
   say(applied.length<=4?'🎉 <b>¡Perfecto!</b> Lo has resuelto en '+applied.length+' movimientos: es el mínimo.'
    :'🎉 ¡Lo has conseguido en '+applied.length+' movimientos! Pero se puede con menos… ¿te animas?');
   render(null,[l,r]);if(!silent)confetti();return}
@@ -184,7 +184,7 @@ $('bHint').onclick=()=>{
  if(busy||won)return;
  hintLvl++;sel=null;
  if(hintLvl==1){showDiffs=true;
-  say('💡 Mira los <b>saltos</b> entre dígitos vecinos (con un 0 delante y otro detrás). Cada movimiento solo cambia <b>dos</b> saltos: uno sube y otro baja lo mismo.');render();return}
+  say('💡 Mira los <b>saltos</b> entre dígitos vecinos (con un 9 delante y otro detrás). Cada movimiento solo cambia <b>dos</b> saltos: uno sube y otro baja lo mismo.');render();return}
  if(hintLvl==2){showDiffs=true;
   say('💡 Los saltos que no son cero se pueden emparejar con su <b>opuesto</b> (+a con −a). Cada pareja se elimina con un solo movimiento: busca las parejas.');render();return}
  const m=nextHintMove();
