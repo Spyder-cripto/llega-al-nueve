@@ -22,6 +22,9 @@ h1{margin:4px 0 2px;text-align:center;font-size:clamp(28px,7vw,44px);letter-spac
 .pill b{color:var(--pink);font-size:20px}
 .board{position:relative;padding:34px 14px 14px}
 .row{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+.levels{display:flex;gap:8px;justify-content:center;margin-bottom:10px}
+.lvl{font:inherit;font-weight:bold;border:none;border-radius:999px;padding:8px 18px;background:#fff;color:#2b2350;cursor:pointer;box-shadow:0 2px 6px #0002}
+.lvl.on{background:#ff9a1f;color:#fff}
 .tile{aspect-ratio:3/4;border-radius:14px;display:flex;align-items:center;justify-content:center;
  font-size:clamp(24px,7.5vw,48px);font-weight:900;color:#fff;cursor:pointer;user-select:none;
  box-shadow:0 5px 0 #0003,0 8px 14px #0002;transition:transform .15s,box-shadow .15s,background .3s;position:relative;
@@ -65,6 +68,7 @@ summary{cursor:pointer;font-weight:bold}
 <p class="sub">Deja todos los dígitos en <b>9</b> con el menor número de movimientos.</p>
 
 <div class="card">
+ <div class="levels"><button class="lvl on" onclick="setLevel(0)">Nivel 1</button><button class="lvl" onclick="setLevel(1)">Nivel 2</button></div>
  <div class="stats"><div class="pill">Movimientos: <b id="mv">0</b></div></div>
  <div class="board">
   <div class="diffs" id="diffs"></div>
@@ -87,15 +91,20 @@ summary{cursor:pointer;font-weight:bold}
 <div class="card">
 <details open><summary>Cómo se juega</summary>
 <p>Toca un dígito y luego otro: se seleccionan ellos y todos los que hay entre medias (un grupo contiguo). Después pulsa una cantidad para <b>restarla</b> o <b>sumarla</b> a todo el grupo. Ningún dígito puede salirse de 0–9, así que los botones que lo harían se apagan.</p>
-<p>Un movimiento es una selección más una cantidad. ¿Cuál es el mínimo de movimientos para llegar a 9999999999?</p>
+<p>Un movimiento es una selección más una cantidad. ¿Cuál es el mínimo de movimientos para llegar a todo nueves?</p>
 </details>
 </div>
 </main>
 <canvas id="fx"></canvas>
 <script>
-const START=[8,6,6,8,1,1,2,2,9,1];
-const SOL=[[0,5,1],[1,2,2],[4,7,7],[9,9,8]];
-const N=10;
+const LEVELS=[
+ {start:[8,6,6,8,1,1,2,2,9,1],sol:[[0,5,1],[1,2,2],[4,7,7],[9,9,8]]},
+ {start:[4,4,4,5,0,0,0,5,5,5,5,4],sol:[[4,6,5],[3,10,-1],[0,11,5]]}
+];
+let lv=0,START=LEVELS[0].start,SOL=LEVELS[0].sol,N=START.length;
+function setLevel(i){lv=i;START=LEVELS[i].start;SOL=LEVELS[i].sol;N=START.length;
+ row.style.gridTemplateColumns='repeat('+N+',1fr)';
+ document.querySelectorAll('.lvl').forEach((b,j)=>b.classList.toggle('on',j==i));reset()}
 let cur,applied,hist,sel,hintLvl,showDiffs,busy,won;
 const $=id=>document.getElementById(id);
 const row=$('row'),msg=$('msg');
@@ -125,7 +134,7 @@ function render(hintMove,popRange){
   const d=[cur[0]-9];for(let i=1;i<N;i++)d.push(cur[i]-cur[i-1]);d.push(9-cur[N-1]);
   d.forEach((x,i)=>{const s=document.createElement('span');
    s.textContent=x>0?'+'+x:x;s.className=x>0?'p':x<0?'n':'z';
-   s.style.left='calc('+i+' * (100% + 6px) / 10 - 3px)';
+   s.style.left='calc('+i+' * (100% + 6px) / '+N+' - 3px)';
    if(i==0)s.style.left='0';if(i==N)s.style.left='100%';
    dg.appendChild(s)});
  }
@@ -163,7 +172,7 @@ function apply(k,rg,silent){
  applied.push([l,r,k]);
  sel=null;hintLvl=Math.min(hintLvl,3);
  if(cur.every(x=>x==9)){won=true;
-  say(applied.length<=4?'🎉 <b>¡Perfecto!</b> Lo has resuelto en '+applied.length+' movimientos: es el mínimo.'
+  say(applied.length<=SOL.length?'🎉 <b>¡Perfecto!</b> Lo has resuelto en '+applied.length+' movimientos: es el mínimo.'
    :'🎉 ¡Lo has conseguido en '+applied.length+' movimientos! Pero se puede con menos… ¿te animas?');
   render(null,[l,r]);if(!silent)confetti();return}
  say('Movimiento hecho. Elige otro grupo.');
@@ -210,7 +219,7 @@ $('bSol').onclick=async()=>{
   if(i<SOL.length-1){await sleep(1300)}
  }
  busy=false;
- say('🔑 ¡Listo en <b>4</b> movimientos! Los 8 saltos formaban 4 parejas opuestas y cada movimiento elimina una. Pulsa Reiniciar para jugar tú.');
+ say('🔑 ¡Listo en <b>'+SOL.length+'</b> movimientos! Cada movimiento elimina una pareja de saltos opuestos. Pulsa Reiniciar para jugar tú.');
  render();
 };
 
