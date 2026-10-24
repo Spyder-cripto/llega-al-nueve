@@ -71,7 +71,7 @@ summary{cursor:pointer;font-weight:bold}
 <p class="sub">Deja todos los dígitos en <b>9</b> con el menor número de movimientos.</p>
 
 <div class="card c-juego">
- <div class="levels"><button class="lvl on" onclick="setLevel(0)">Nivel 1</button><button class="lvl" onclick="setLevel(1)">Nivel 2</button></div>
+ <div class="levels"><button class="lvl on" onclick="setLevel(0)">Nivel 0</button><button class="lvl" onclick="setLevel(1)">Nivel 1</button><button class="lvl" onclick="setLevel(2)">Nivel 2</button></div>
  <div class="stats"><div class="pill">Movimientos: <b id="mv">0</b></div></div>
  <div class="board">
   <div class="diffs" id="diffs"></div>
@@ -101,6 +101,7 @@ summary{cursor:pointer;font-weight:bold}
 <canvas id="fx"></canvas>
 <script>
 const LEVELS=[
+ {start:[6,6,1,1,2,3,3,8,8,7],sol:[[0,3,1],[2,6,5],[5,8,-1],[0,9,2]]},
  {start:[2,6,3,8,0,9,6,3,7,0],sol:[[5,5,-3],[5,6,-3],[4,7,4],[0,8,-2],[2,4,3],[1,3,-4],[3,8,-5],[0,9,9]]},
  {start:[3,7,1,8,0,9,7,1,5,0],sol:[[0,1,-3],[5,6,-6],[4,7,4],[3,5,-2],[2,4,3],[1,3,-4],[3,8,-5],[0,9,9]]}
 ];
