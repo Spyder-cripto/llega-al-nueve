@@ -6,7 +6,7 @@
 <title>Llega al cero II</title>
 <meta name="description" content="Un acertijo de dígitos: deja el número en ceros con el mínimo de movimientos.">
 <style>
-:root{--bg1:#fff4d6;--bg2:#d9f0ff;--ink:#2b2350;--card:#ffffffd9;--pink:#ff4f9a;--blue:#2f7bff;--green:#19c37d;--orange:#ff9a1f;--violet:#8a4dff}
+:root{--bg1:#fff4d6;--bg2:#d9f0ff;--ink:#2b2350;--card:#ffffffd9;--pink:#ff4f9a;--blue:#2f7bff;--green:#19c37d;--orange:#ff9a1f;--violet:#b03fd0}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0}
 body{font-family:"Trebuchet MS",Verdana,sans-serif;color:var(--ink);min-height:100vh;
@@ -35,7 +35,7 @@ h1{margin:4px 0 2px;text-align:center;font-size:clamp(28px,7vw,44px);letter-spac
 .d0{background:#b9c4d0;text-shadow:none;color:#5d6a78}
 .d1{background:#ff4f6d}.d2{background:#ff8a1f}.d3{background:#f5b800;text-shadow:0 2px 0 #0004}
 .d4{background:#8cc63f}.d5{background:#19c37d}.d6{background:#0e9f6e}.d7{background:#2f7bff}
-.d8{background:#7a4dff}.d9{background:#d944c8}
+.d8{background:#a83ad0}.d9{background:#d944c8}
 .diffs{position:absolute;left:14px;right:14px;top:6px;height:24px;pointer-events:none}
 .diffs span{position:absolute;transform:translateX(-50%);font-size:14px;font-weight:bold;border-radius:8px;padding:1px 5px;background:#fff;box-shadow:0 1px 3px #0003}
 .diffs .z{opacity:.35;font-weight:normal}
@@ -216,7 +216,7 @@ $('bSol').onclick=async()=>{
 
 function confetti(){
  const c=$('fx'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
- const cols=['#ff4f6d','#ff8a1f','#f5b800','#19c37d','#2f7bff','#7a4dff','#d944c8'];
+ const cols=['#ff4f6d','#ff8a1f','#f5b800','#19c37d','#2f7bff','#a83ad0','#d944c8'];
  const ps=Array.from({length:160},()=>({x:Math.random()*c.width,y:-Math.random()*c.height*.6,
   vx:(Math.random()-.5)*3,vy:2+Math.random()*4,s:6+Math.random()*8,c:cols[Math.random()*7|0],a:Math.random()*6}));
  let f=0;(function step(){x.clearRect(0,0,c.width,c.height);
