@@ -216,7 +216,7 @@ $('bSol').onclick=async()=>{
 
 function confetti(){
  const c=$('fx'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
- const cols=['#ff4f6d','#ff8a1f','#f5b800','#19c37d','#2f7bff','#a83ad0','#d944c8'];
+ const cols=['#ff4f6d','#ff8a1f','#f5b800','#19c37d','#8cc63f','#a83ad0','#d944c8'];
  const ps=Array.from({length:160},()=>({x:Math.random()*c.width,y:-Math.random()*c.height*.6,
   vx:(Math.random()-.5)*3,vy:2+Math.random()*4,s:6+Math.random()*8,c:cols[Math.random()*7|0],a:Math.random()*6}));
  let f=0;(function step(){x.clearRect(0,0,c.width,c.height);
