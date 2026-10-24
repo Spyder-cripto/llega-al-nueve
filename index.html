@@ -17,13 +17,16 @@ h1{margin:4px 0 2px;text-align:center;font-size:clamp(28px,7vw,44px);letter-spac
  -webkit-background-clip:text;background-clip:text;color:transparent}
 .sub{text-align:center;margin:0 0 14px;font-size:16px;line-height:1.4}
 .card{background:var(--card);border-radius:22px;padding:16px;box-shadow:0 8px 24px #5b3fa033;margin-bottom:14px}
+.c-juego{background:linear-gradient(135deg,#ffd9e8,#fff0b3 50%,#d4f5c4)}
+.c-botones{background:linear-gradient(135deg,#ffe2b8,#ffd0e3)}
+.c-ayuda{background:linear-gradient(135deg,#d9f5c9,#fff2b0)}
 .stats{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
-.pill{background:#fff;border-radius:999px;padding:6px 16px;font-weight:bold;box-shadow:0 2px 6px #0002}
+.pill{background:#ffe9a8;border-radius:999px;padding:6px 16px;font-weight:bold;box-shadow:0 2px 6px #0002}
 .pill b{color:var(--pink);font-size:20px}
 .board{position:relative;padding:34px 14px 14px}
 .row{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
 .levels{display:flex;gap:8px;justify-content:center;margin-bottom:10px}
-.lvl{font:inherit;font-weight:bold;border:none;border-radius:999px;padding:8px 18px;background:#fff;color:#2b2350;cursor:pointer;box-shadow:0 2px 6px #0002}
+.lvl{font:inherit;font-weight:bold;border:none;border-radius:999px;padding:8px 18px;background:#ffd0e3;color:#2b2350;cursor:pointer;box-shadow:0 2px 6px #0002}
 .lvl.on{background:#ff9a1f;color:#fff}
 .tile{aspect-ratio:3/4;border-radius:14px;display:flex;align-items:center;justify-content:center;
  font-size:clamp(24px,7.5vw,48px);font-weight:900;color:#fff;cursor:pointer;user-select:none;
@@ -40,7 +43,7 @@ h1{margin:4px 0 2px;text-align:center;font-size:clamp(28px,7vw,44px);letter-spac
 .d4{background:#19c37d}.d5{background:#a83ad0}.d6{background:#ff6fa5}.d7{background:#2f7bff}
 .d8{background:#b5651d}.d0{background:#3a3a52}
 .diffs{position:absolute;left:14px;right:14px;top:6px;height:24px;pointer-events:none}
-.diffs span{position:absolute;transform:translateX(-50%);font-size:14px;font-weight:bold;border-radius:8px;padding:1px 5px;background:#fff;box-shadow:0 1px 3px #0003}
+.diffs span{position:absolute;transform:translateX(-50%);font-size:14px;font-weight:bold;border-radius:8px;padding:1px 5px;background:#fff5c9;box-shadow:0 1px 3px #0003}
 .diffs .z{opacity:.35;font-weight:normal}
 .diffs .p{color:#0a8f55}.diffs .n{color:#d6204f}
 .msg{min-height:52px;text-align:center;font-size:17px;line-height:1.35;margin:10px 0 4px}
@@ -67,7 +70,7 @@ summary{cursor:pointer;font-weight:bold}
 <h1>Llega al nueve</h1>
 <p class="sub">Deja todos los dígitos en <b>9</b> con el menor número de movimientos.</p>
 
-<div class="card">
+<div class="card c-juego">
  <div class="levels"><button class="lvl on" onclick="setLevel(0)">Nivel 1</button><button class="lvl" onclick="setLevel(1)">Nivel 2</button></div>
  <div class="stats"><div class="pill">Movimientos: <b id="mv">0</b></div></div>
  <div class="board">
@@ -81,14 +84,14 @@ summary{cursor:pointer;font-weight:bold}
  <div class="amounts" id="ap"></div>
 </div>
 
-<div class="card btns">
+<div class="card c-botones btns">
  <button class="btn b-hint" id="bHint">💡 Pista</button>
  <button class="btn b-sol" id="bSol">🔑 Solución</button>
  <button class="btn b-undo" id="bUndo">↩ Deshacer</button>
  <button class="btn b-reset" id="bReset">⟲ Reiniciar</button>
 </div>
 
-<div class="card">
+<div class="card c-ayuda">
 <details open><summary>Cómo se juega</summary>
 <p>Toca un dígito y luego otro: se seleccionan ellos y todos los que hay entre medias (un grupo contiguo). Después pulsa una cantidad para <b>restarla</b> o <b>sumarla</b> a todo el grupo. Ningún dígito puede salirse de 0–9, así que los botones que lo harían se apagan.</p>
 <p>Un movimiento es una selección más una cantidad. ¿Cuál es el mínimo de movimientos para llegar a todo nueves?</p>
